@@ -1,6 +1,5 @@
 var timeBlocks = document.getElementById("timeBlocks");
 var currentDay = document.getElementById("currentDay");
-
 //need data in for currentDay id.
 function keepingTime(){
 var now = moment().format('MMMM Do YYYY, HH:mm:ss ');
@@ -11,20 +10,20 @@ console.log(now);
 setInterval(keepingTime, 1000);
 
 var availTimeSlots = [
-  "07:00",
-  "08:00",
-  "09:00",
-  "10:00",
-  "11:00",
-  "12:00",
-  "13:00",
-  "14:00",
-  "15:00",
-  "16:00",
-  "17:00",
-  "18:00",
-  "19:00",
-  "20:00"
+  "07:00 ",
+  "08:00 ",
+  "09:00 ",
+  "10:00 ",
+  "11:00 ",
+  "12:00 ",
+  "13:00 ",
+  "14:00 ",
+  "15:00 ",
+  "16:00 ",
+  "17:00 ",
+  "18:00 ",
+  "19:00 ",
+  "20:00 "
 
 ];
 
@@ -48,15 +47,15 @@ function getTimeBlocks() {
 //textarea created to capture appointment details and make accessible to local storage.
     var textarea = document.createElement("textarea");
     textarea.placeholder = "Enter remarks here";
-    // textarea.setAttribute("class", "tenses"); does not work, so linked tenseStatus to col-10.
-    textarea.setAttribute("class", "col-10"); 
+    textarea.setAttribute("class", "col-10");
     textarea.setAttribute("id", i);
     row.appendChild(textarea);
 //save btn will record values and reserve the time slot.
     var saveBtn = document.createElement("button");
     // var saveBtnIcon = document.createElement("span");
     // saveBtnIcon.setAttribute("class", "oi oi-plus");
-    saveBtn.textContent = "Save";
+    // 
+    saveBtn.innerHTML = `Save `;
     saveBtn.classList.add("saveBtn");
     saveBtn.setAttribute("value", i);
     row.appendChild(saveBtn);
@@ -64,15 +63,25 @@ function getTimeBlocks() {
   }
 }
 
-$(document).on('click','.saveBtn',function(){
-    var saveBtnInfo = $(this).val();
-    var saveRemarks = document.getElementById(saveBtnInfo).value;
-    localStorage.setItem(saveBtnInfo, saveRemarks);
+$(document).on('click','.saveBtn',function(event){
+    task = JSON.stringify(event.target.previousSibling.value)
+    id = JSON.stringify(event.target.previousSibling.id)
+    localStorage.setItem(id, task);
 });
 
-function clearSchedule(){}
-//clear schedule to default config
 
+function getStorage(){
+var textAreas = document.getElementsByTagName('textarea')
+console.log(textAreas)
+for (var index = 0; index < textAreas.length; index++) {
+    var key = index
+    var storage = localStorage.getItem(`"${key}"`)
+    if (storage != ""){
+        textAreas[index].value = storage
+    }    
+    }
+}
+getStorage()
 
 function realTimeBlocks() {
     var getHour = moment().format('HH:mm');

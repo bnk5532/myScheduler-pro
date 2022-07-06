@@ -2,6 +2,13 @@ var timeBlocks = document.getElementById("timeBlocks");
 var currentDay = document.getElementById("currentDay");
 
 //need data in for currentDay id.
+function keepingTime(){
+var now = moment().format('MMMM Do YYYY, HH:mm:ss ');
+    currentDay.innerHTML = now;
+console.log(now);
+}
+//setInterval keeps the seconds counting on the clock nested in the header.
+setInterval(keepingTime, 1000);
 
 var availTimeSlots = [
   "07:00",
@@ -17,9 +24,7 @@ var availTimeSlots = [
   "17:00",
   "18:00",
   "19:00",
-  "20:00",
-  "21:00",
-  "22:00",
+  "20:00"
 
 ];
 
@@ -42,8 +47,8 @@ function getTimeBlocks() {
     row.appendChild(hour);
 //textarea created to capture appointment details and make accessible to local storage.
     var textarea = document.createElement("textarea");
-    textarea.placeholder = "Enter notes here";
-    textarea.setAttribute("class", "tenses");
+    textarea.placeholder = "Enter remarks here";
+    // textarea.setAttribute("class", "tenses"); does not work, so linked tenseStatus to col-10.
     textarea.setAttribute("class", "col-10"); 
     textarea.setAttribute("id", i);
     row.appendChild(textarea);
@@ -59,16 +64,26 @@ function getTimeBlocks() {
   }
 }
 
+$(document).on('click','.saveBtn',function(){
+    var saveBtnInfo = $(this).val();
+    var saveRemarks = document.getElementById(saveBtnInfo).value;
+    localStorage.setItem(saveBtnInfo, saveRemarks);
+});
+
+function clearSchedule(){}
+//clear schedule to default config
 
 
 function realTimeBlocks() {
     var getHour = moment().format('HH:mm');
     console.log(getHour)
-    var thisHour = moment(getHour, 'HH:mm');
-    var tenseStatus = document.getElementsByClassName('tenses')
+    // HH required for color function to work with logic and CSS.
+    var thisHour = moment(getHour, 'HH');
+    console.log(thisHour)
+    var tenseStatus = document.getElementsByClassName('col-10')
     
     for (var i = 0; i < tenseStatus.length; i++) {
-        var timeBlock = moment(availTimeSlots[i], 'HH:mm');
+        var timeBlock = moment(availTimeSlots[i], 'HH');
         if (thisHour.isSame(timeBlock) === true) {
             tenseStatus [i].classList.add('present')
             tenseStatus [i].classList.remove('future')
@@ -85,4 +100,6 @@ function realTimeBlocks() {
     }
 } 
 realTimeBlocks()
-setInterval(realTimeBlocks, 10000);
+setInterval(realTimeBlocks, 20000);
+// checks time every 20 secs.
+

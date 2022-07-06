@@ -52,10 +52,7 @@ function getTimeBlocks() {
     row.appendChild(textarea);
 //save btn will record values and reserve the time slot.
     var saveBtn = document.createElement("button");
-    // var saveBtnIcon = document.createElement("span");
-    // saveBtnIcon.setAttribute("class", "oi oi-plus");
-    // 
-    saveBtn.innerHTML = `Save `;
+    saveBtn.innerHTML = "Save"; 
     saveBtn.classList.add("saveBtn");
     saveBtn.setAttribute("value", i);
     row.appendChild(saveBtn);
@@ -63,13 +60,14 @@ function getTimeBlocks() {
   }
 }
 
+//save button function
 $(document).on('click','.saveBtn',function(event){
     task = JSON.stringify(event.target.previousSibling.value)
     id = JSON.stringify(event.target.previousSibling.id)
     localStorage.setItem(id, task);
 });
 
-
+//retrieve localStorage
 function getStorage(){
 var textAreas = document.getElementsByTagName('textarea')
 console.log(textAreas)

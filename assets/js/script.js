@@ -52,7 +52,7 @@ function getTimeBlocks() {
     row.appendChild(textarea);
 //save btn will record values and reserve the time slot.
     var saveBtn = document.createElement("button");
-    saveBtn.innerHTML = "Save"; 
+    saveBtn.innerHTML = "Save"
     saveBtn.classList.add("saveBtn");
     saveBtn.setAttribute("value", i);
     row.appendChild(saveBtn);
@@ -62,8 +62,8 @@ function getTimeBlocks() {
 
 //save button function
 $(document).on('click','.saveBtn',function(event){
-    task = JSON.stringify(event.target.previousSibling.value)
-    id = JSON.stringify(event.target.previousSibling.id)
+    task = event.target.previousSibling.value
+    id = event.target.previousSibling.id
     localStorage.setItem(id, task);
 });
 
@@ -73,12 +73,12 @@ var textAreas = document.getElementsByTagName('textarea')
 console.log(textAreas)
 for (var index = 0; index < textAreas.length; index++) {
     var key = index
-    var storage = localStorage.getItem(`"${key}"`)
-    if (storage != ""){
+    var storage = localStorage.getItem(`${key}`)
         textAreas[index].value = storage
-    }    
+       
     }
-}
+};
+
 getStorage()
 
 function realTimeBlocks() {
